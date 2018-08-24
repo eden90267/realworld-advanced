@@ -1,11 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {LayoutModule} from './layout/layout.module';
-import {LoginModule} from './login/login.module';
-import {PostsModule} from './posts/posts.module';
 
 @NgModule({
   declarations: [
@@ -14,11 +12,10 @@ import {PostsModule} from './posts/posts.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
-    LoginModule,
-    PostsModule
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
