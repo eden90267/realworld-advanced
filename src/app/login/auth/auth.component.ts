@@ -8,6 +8,11 @@ import {Router} from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
+  loginData = {
+    email: '',
+    password: ''
+  };
+
   constructor(private router: Router) {
   }
 

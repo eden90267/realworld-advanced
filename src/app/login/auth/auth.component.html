@@ -5,14 +5,26 @@
       <div class="col-md-6 col-md-offset-3 col-xs-12">
         <h1 class="text-xs-center">Sign in</h1>
 
-        <form>
+        <form #loginForm="ngForm">
           <fieldset class="form-group">
-            <input name="email" class="form-control form-control-lg" type="text" placeholder="Email">
+            <input name="email" class="form-control form-control-lg" type="text" placeholder="Email"
+                   [ngClass]="{invalid: email.dirty && email.invalid}"
+                   [(ngModel)]="loginData.email" #email="ngModel" pattern='^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' required>
           </fieldset>
+          <div class="alert alert-danger" *ngIf="email.dirty && email.invalid">
+            <span *ngIf="email.errors['required']">Email 為必填項目</span>
+            <span *ngIf="email.errors['pattern']">必須為 Email 格式</span>
+          </div>
           <fieldset class="form-group">
-            <input name="password" class="form-control form-control-lg" type="password" placeholder="Password">
+            <input name="password" class="form-control form-control-lg" type="password" placeholder="Password"
+                   [ngClass]="{invalid: password.dirty && password.invalid}"
+                   [(ngModel)]="loginData.password" #password="ngModel" required minlength="4">
           </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right" (click)="doLogin()">
+          <div class="alert alert-danger" *ngIf="password.dirty && password.invalid">
+            <span *ngIf="password.errors['required']">Password 為必填項目</span>
+            <span *ngIf="password.errors['minlength']">Password 長度必須大於等於 4</span>
+          </div>
+          <button class="btn btn-lg btn-primary pull-xs-right" (click)="doLogin()" [disabled]="loginForm.invalid">
             Sign in
           </button>
         </form>
