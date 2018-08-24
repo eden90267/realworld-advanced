@@ -3,25 +3,35 @@
     <div class="row">
 
       <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <form>
+        <form [formGroup]="post">
           <fieldset class="form-group">
-            <input class="form-control form-control-lg" type="text" placeholder="Post Title">
-          </fieldset>
-          <fieldset class="form-group">
-            <textarea class="form-control" rows="8" placeholder="Write your post (in markdown)"></textarea>
-          </fieldset>
-          <fieldset class="form-group">
-            <input class="form-control" type="text" placeholder="Enter tags">
-            <div class="tag-list">
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> programming</span>
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> javascript</span>
-              <span class="label label-pill label-default">
-                <i class="ion-close-round"></i> webdev</span>
+            <input class="form-control form-control-lg" type="text" placeholder="Post Title" formControlName="title">
+            <div class="alert alert-danger" *ngIf="title.dirty && title.invalid">
+              <span *ngIf="title.errors['required']">請輸入標題</span>
             </div>
           </fieldset>
-          <button type="button" class="btn btn-lg btn-primary pull-xs-right">
+          <fieldset class="form-group">
+            <textarea class="form-control" rows="8" placeholder="Write your post (in markdown)" formControlName="body"></textarea>
+            <div class="alert alert-danger" *ngIf="body.dirty && body.invalid">
+              <span *ngIf="body.errors['required']">請輸入內文</span>
+              <span *ngIf="body.errors['minlength']">內文至少 10 個字</span>
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <input class="form-control" type="text" placeholder="Enter tags" #tag (keyup.enter)="addTag(tag.value)">
+            <div class="tag-list" formArrayName="tags">
+              <span class="label label-pill label-default" *ngFor="let tag of tags.controls">
+                <i class="ion-close-round"></i> {{tag.value}}</span>
+            </div>
+          </fieldset>
+
+          <section formGroupName="seo">
+            <fieldset class="form-group">
+              <input class="form-control" type="text" placeholder="Meta tags" formControlName="meta">
+            </fieldset>
+          </section>
+
+          <button type="button" class="btn btn-lg btn-primary pull-xs-right" (click)="createPost()">
             Create Post
           </button>
         </form>
